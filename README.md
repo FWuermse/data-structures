@@ -1,5 +1,5 @@
 This little example is ought to be an entry into functional programming for me.
-The following is a simple implementation of a LinkedList.
+The following is a simple implementation of a LinkedList and a Tree.
 
 To run this programm locally [install haskell and the ghc](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/intro.html#obtaining-ghc).
 Then type: 

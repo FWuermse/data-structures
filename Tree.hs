@@ -1,11 +1,11 @@
-data Tree a = Node (Tree a) a (Tree a) | Nil
+data BinaryTree a = Node (BinaryTree a) a (BinaryTree a) | Nil
     deriving Show
 
-newTree :: a -> Tree a
+newTree :: a -> BinaryTree a
 newTree x = Node Nil x Nil
 
-addTopRight :: a -> Tree a -> Tree a
+addTopRight :: a -> BinaryTree a -> BinaryTree a
 addTopRight right tree = Node tree right Nil
 
-addTopLeft :: a -> Tree a -> Tree a
+addTopLeft :: a -> BinaryTree a -> BinaryTree a
 addTopLeft left tree = Node Nil left tree
