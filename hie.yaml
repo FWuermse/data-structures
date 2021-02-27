@@ -5,3 +5,4 @@ cradle:
         cradle:
           stack:
             - path: "./List.hs"
+            - path: "./Tree.hs"
