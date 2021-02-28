@@ -4,5 +4,5 @@ cradle:
       config:
         cradle:
           stack:
-            - path: "./List.hs"
-            - path: "./Tree.hs"
+            - path: "./LinkedList.hs"
+            - path: "./BinaryTree.hs"

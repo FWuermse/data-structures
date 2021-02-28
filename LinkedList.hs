@@ -1,3 +1,5 @@
+module LinkedList where
+
 data LinkedList a = Head a (LinkedList a) | Nil
 instance (Show a) => Show (LinkedList a) where
     show Nil = show "Nil"
@@ -5,11 +7,11 @@ instance (Show a) => Show (LinkedList a) where
     show (Head y tail) = show y ++ ", " ++ show tail
 
 first :: LinkedList a -> a
-first (Head y tail) = y
+first (Head y _) = y
 
 rest :: LinkedList a -> LinkedList a
 rest Nil = Nil
-rest (Head y tail) = tail
+rest (Head _ tail) = tail
 
 newList :: a -> LinkedList a
 newList x = Head x Nil
@@ -23,19 +25,19 @@ append x (Head y tail) = Head y (append x tail)
 
 len :: LinkedList a -> Integer
 len Nil = 0
-len (Head y tail) = 1 + len tail
+len (Head _ tail) = 1 + len tail
 
 contains :: Eq a => a -> LinkedList a -> Bool
 contains _ Nil = False
 contains x (Head y tail) = x == y || contains x tail
 
 atIndex :: Integer -> LinkedList a -> Maybe a
-atIndex 0 (Head y tail) = Just y
-atIndex x Nil = Nothing
-atIndex x (Head y tail) = atIndex (x - 1) tail
+atIndex _ Nil = Nothing
+atIndex 0 xs = Just (first xs)
+atIndex x xs = atIndex (x - 1) (rest xs)
 
 removeFirst :: Eq a => a -> LinkedList a -> LinkedList a
-removeFirst x Nil = Nil
+removeFirst _ Nil = Nil
 removeFirst x (Head y tail)
     | x == y = tail
     | otherwise = Head y (removeFirst x tail)
@@ -63,8 +65,8 @@ isAscending (Head y (Head z tail)) = y >= z && isAscending tail
 
 retain :: Integer -> LinkedList a -> LinkedList a
 retain 0 _ = Nil
-retain x (Head y tail)
-    | x == len (Head y tail) = Head y tail
+retain x xs@(Head y tail)
+    | x == len xs = xs
     | otherwise = Head y (retain (x - 1) tail)
 
 discard :: Integer -> LinkedList a -> LinkedList a
@@ -76,9 +78,9 @@ Support index greater than length of LinkedList
 
 discard :: Integer -> LinkedList a -> LinkedList a
 discard _ Nil = Nil
-discard x (Head y tail)
+discard x xs@(Head y tail)
     | x > 0 = discard (x - 1) tail
-    | otherwise = Head y tail
+    | otherwise = xs
 -}
 
 fold :: (a -> b -> b) -> b -> LinkedList a -> b
@@ -87,7 +89,7 @@ fold f x (Head y tail) = f y (fold f x tail)
 
 mergeSort :: Ord a => LinkedList a -> LinkedList a
 mergeSort Nil = Nil
-mergeSort (Head y Nil) = Head y Nil
+mergeSort x@(Head y Nil) = x
 mergeSort xs = merge (mergeSort first) (mergeSort second)
     where first = retain half xs
           second = discard half xs
