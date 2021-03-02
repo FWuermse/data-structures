@@ -87,6 +87,9 @@ fold :: (a -> b -> b) -> b -> LinkedList a -> b
 fold _ x Nil = x
 fold f x (Head y tail) = f y (fold f x tail)
 
+inverseFold :: (a -> b -> b) -> b -> LinkedList a -> b
+inverseFold f x xs = fold f x (invert xs)
+
 mergeSort :: Ord a => LinkedList a -> LinkedList a
 mergeSort Nil = Nil
 mergeSort x@(Head y Nil) = x
