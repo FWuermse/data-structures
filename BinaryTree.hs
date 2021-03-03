@@ -20,9 +20,13 @@ addToSorted x tree@(Node left y right)
 
 llToBST :: Ord a => LinkedList a -> BinaryTree a -> BinaryTree a
 llToBST Nil _ = Tip
-llToBST (Head y Nil) _ = newTree y
+llToBST (Head x Nil) _ = newTree x
 llToBST xs tree = inverseFold addToSorted tree xs
 
 invertBT :: BinaryTree a -> BinaryTree a
 invertBT Tip = Tip
-invertBT (Node left y right) = Node (invertBT right) y (invertBT left)
+invertBT (Node left x right) = Node (invertBT right) x (invertBT left)
+
+totalNodes :: BinaryTree a -> Integer 
+totalNodes Tip = 0
+totalNodes (Node left x right) = (totalNodes left) + (totalNodes right) + 1
