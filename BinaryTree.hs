@@ -23,10 +23,22 @@ llToBST Nil _ = Tip
 llToBST (Head x Nil) _ = newTree x
 llToBST xs tree = inverseFold addToSorted tree xs
 
+-- Pass every job interview with this weird trick
 invertBT :: BinaryTree a -> BinaryTree a
 invertBT Tip = Tip
 invertBT (Node left x right) = Node (invertBT right) x (invertBT left)
 
 totalNodes :: BinaryTree a -> Integer 
 totalNodes Tip = 0
-totalNodes (Node left x right) = (totalNodes left) + (totalNodes right) + 1
+totalNodes (Node left x right) = totalNodes left + totalNodes right + 1
+
+containsBST :: (Ord a) => a -> BinaryTree a -> Bool
+containsBST _ Tip = False
+containsBST x (Node left y right)
+    | x < y = containsBST x left
+    | x > y = containsBST x right
+    | otherwise = True
+
+toList :: BinaryTree a -> LinkedList a
+toList Tip = Nil
+toList (Node left x right) = appendList (toList right) (append x (toList left))
